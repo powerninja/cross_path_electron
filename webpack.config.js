@@ -25,7 +25,7 @@ module.exports = [
         },
       ],
     },
-    target: 'electron-main', // <---- 変更
+    target: 'electron-main',
   },
   // React 設定
   {
@@ -55,6 +55,10 @@ module.exports = [
             },
           },
         },
+        {
+          test: /\.css$/,
+          use: ['style-loader', 'css-loader'],
+        },
       ],
     },
     resolve: {
@@ -68,6 +72,6 @@ module.exports = [
         inject: false,
       }),
     ],
-    target: 'electron-renderer', // <---- 追加
+    target: 'electron-renderer',
   },
 ];
