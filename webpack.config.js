@@ -12,50 +12,62 @@ module.exports = [
       filename: 'index.js',
     },
     module: {
-      loaders: [
+      rules: [
         {
           test: /\.jsx?$/,
-          loader: 'babel-loader',
           exclude: /node_modules/,
-          query: {
-            presets: ['es2015', 'react'],
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env', '@babel/preset-react'],
+            },
           },
         },
       ],
     },
-    target: 'electron',
+    target: 'electron-main', // <---- 変更
   },
   // React 設定
   {
     entry: {
-      react: './src/react/index.js',
+      react: './src/index.tsx',
     },
     output: {
       path: path.join(__dirname, 'build/react'),
       filename: 'index.js',
     },
     module: {
-      loaders: [
+      rules: [
+        {
+          test: /\.tsx?$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'ts-loader',
+          },
+        },
         {
           test: /\.jsx?$/,
-          loader: 'babel-loader',
           exclude: /node_modules/,
-          query: {
-            presets: ['es2015', 'react'],
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env', '@babel/preset-react'],
+            },
           },
         },
       ],
     },
     resolve: {
-      extensions: ['*', '.js', '.jsx'],
+      extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
     },
     // Electron Renderの設定
     plugins: [
       new HtmlWebpackPlugin({
-        template: './src/react/index.html',
+        template: './src/index.html',
         filename: path.join(__dirname, 'build/react/index.html'),
         inject: false,
       }),
     ],
+    target: 'electron-renderer', // <---- 追加
   },
 ];
