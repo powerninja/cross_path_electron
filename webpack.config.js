@@ -30,7 +30,7 @@ module.exports = [
   // React 設定
   {
     entry: {
-      react: './src/index.tsx',
+      react: './src/react/index.tsx',
     },
     output: {
       path: path.join(__dirname, 'build/react'),
@@ -67,7 +67,7 @@ module.exports = [
     // Electron Renderの設定
     plugins: [
       new HtmlWebpackPlugin({
-        template: './src/index.html',
+        template: './src/react/index.html',
         filename: path.join(__dirname, 'build/react/index.html'),
         inject: false,
       }),
