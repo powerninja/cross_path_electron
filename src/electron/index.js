@@ -11,7 +11,7 @@ const rootPath = `${ROOT_PATH}/build/react/index.html`;
 
 // アプリ起動時の処理
 app.on('ready', (e) => {
-  const winSetting = { width: 800, height: 600 };
+  const winSetting = { width: 1200, height: 800 };
   const mainWindow = new BrowserWindow(winSetting);
   // デベロップツールの表示
   mainWindow.openDevTools();
