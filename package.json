@@ -1,5 +1,6 @@
 {
   "name": "cross_path",
+  "productName": "TrailMixer",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -32,7 +33,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "start": "electron .",
-    "build": "webpack --config webpack.config.js --mode production --color"
+    "build": "electron-packager . --platform=darwin --icon=app.icns --overwrite"
   },
   "eslintConfig": {
     "extends": [
