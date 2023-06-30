@@ -93,23 +93,6 @@ export const App = () => {
     setConvertedMacPath(initialPath);
   };
 
-  const handleDrop = (event: any) => {
-    event.preventDefault();
-    event.stopPropagation();
-
-    for (const file of event.dataTransfer.files) {
-      // send the file path to the main process
-      ipcRenderer.send('ondrop', file.path);
-      // Also, update the state in your React component
-      setWinPath(file.path);
-    }
-  };
-
-  const preventDefault = (event: any) => {
-    event.preventDefault();
-    event.stopPropagation();
-  };
-
   return (
     <>
       {checkCopyWinFlag || checkCopyMacFlag ? (
@@ -182,6 +165,24 @@ export const App = () => {
                 onChange={(event) => {
                   setPathInput(event.target.value, true);
                 }}
+                onDrop={(event) => {
+                  event.preventDefault();
+                  event.stopPropagation();
+
+                  for (const file of event.dataTransfer.files) {
+                    if (file.path) {
+                      setCheckConvertedWinPath(true);
+                    }
+                    // send the file path to the main process
+                    ipcRenderer.send('ondrop', file.path);
+                    // Also, update the state in your React component
+                    setWinPath(file.path);
+                  }
+                }}
+                onDragOver={(event) => {
+                  event.preventDefault();
+                  event.stopPropagation();
+                }}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -203,6 +204,24 @@ export const App = () => {
                 value={checkConvertedMacPath ? macPath : convertedMacPath}
                 onChange={(event) => {
                   setPathInput(event.target.value, false);
+                }}
+                onDrop={(event) => {
+                  event.preventDefault();
+                  event.stopPropagation();
+
+                  for (const file of event.dataTransfer.files) {
+                    if (file.path) {
+                      setCheckConvertedMacPath(true);
+                    }
+                    // send the file path to the main process
+                    ipcRenderer.send('ondrop', file.path);
+                    // Also, update the state in your React component
+                    setMacPath(file.path);
+                  }
+                }}
+                onDragOver={(event) => {
+                  event.preventDefault();
+                  event.stopPropagation();
                 }}
                 InputProps={{
                   endAdornment: (
@@ -226,14 +245,6 @@ export const App = () => {
           </div>
         </div>
       </Box>
-      <div
-        id="drop-zone"
-        onDrop={(event) => handleDrop(event)}
-        onDragOver={(event) => preventDefault(event)}
-        onDragLeave={(event) => preventDefault(event)}
-      >
-        Drag & Drop your file here
-      </div>
     </>
   );
 };

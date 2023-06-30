@@ -21,8 +21,6 @@ app.on('ready', (e) => {
       contextIsolation: false,
     },
   });
-  // デベロップツールの表示
-  mainWindow.openDevTools();
   mainWindow.loadURL(rootPath);
 
   ipcMain.on('ondrop', (event, path) => {
