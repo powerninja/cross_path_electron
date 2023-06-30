@@ -2,8 +2,8 @@
 // Electron
 import { app, BrowserWindow } from 'electron';
 import { ipcMain } from 'electron';
+import { shell } from 'electron';
 
-import log from 'electron-log';
 import path from 'path';
 
 // RootPath
@@ -23,6 +23,14 @@ app.on('ready', (e) => {
       webSecurity: false,
     },
   });
+  mainWindow.loadURL(rootPath);
+
+  // mainWindowが新しいウィンドウを開くために 'new-window' イベントを発行した時に発火するリスナーを設定
+  mainWindow.webContents.on('new-window', function (e, url) {
+    e.preventDefault();
+    shell.openExternal(url);
+  });
+
   mainWindow.loadURL(rootPath);
 
   ipcMain.on('ondrop', (event, path) => {
