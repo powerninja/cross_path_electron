@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/TrailMixer-darwin-arm64
 /.pnp
 .pnp.js
 
