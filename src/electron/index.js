@@ -3,13 +3,14 @@
 import { app, BrowserWindow } from 'electron';
 import { ipcMain } from 'electron';
 
+import log from 'electron-log';
 import path from 'path';
 
 // RootPath
-const ROOT_PATH = 'file://' + path.resolve('');
+const ROOT_PATH = path.resolve(__dirname, '../..');
 
-// mainWindowのHTMLファイル(第4項で解説)
-const rootPath = `${ROOT_PATH}/build/react/index.html`;
+// mainWindowのHTMLファイル
+const rootPath = `file://${ROOT_PATH}/build/react/index.html`;
 
 // アプリ起動時の処理
 app.on('ready', (e) => {
@@ -19,6 +20,7 @@ app.on('ready', (e) => {
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
+      webSecurity: false,
     },
   });
   mainWindow.loadURL(rootPath);
