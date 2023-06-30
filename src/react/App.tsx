@@ -131,6 +131,7 @@ export const App = () => {
             </Typography>
             <Box sx={{ flexGrow: 1 }} />
             <Tooltip title="Open GitHub">
+              {/* TODO: 通常のブラウザで開かせる */}
               <IconButton sx={{ p: 0 }} href="https://github.com/powerninja/cross_path">
                 <GitHubIcon />
               </IconButton>
