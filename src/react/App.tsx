@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import './App.css';
 import { usePathConversion } from './hooks/usePathConversion';
 import { useCopyClipboard } from './hooks/useCopyClipboard';
+import { ipcRenderer } from 'electron';
 
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -90,6 +91,23 @@ export const App = () => {
     setMacPath(initialPath);
     setConvertedWinPath(initialPath);
     setConvertedMacPath(initialPath);
+  };
+
+  const handleDrop = (event: any) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    for (const file of event.dataTransfer.files) {
+      // send the file path to the main process
+      ipcRenderer.send('ondrop', file.path);
+      // Also, update the state in your React component
+      setWinPath(file.path);
+    }
+  };
+
+  const preventDefault = (event: any) => {
+    event.preventDefault();
+    event.stopPropagation();
   };
 
   return (
@@ -208,6 +226,14 @@ export const App = () => {
           </div>
         </div>
       </Box>
+      <div
+        id="drop-zone"
+        onDrop={(event) => handleDrop(event)}
+        onDragOver={(event) => preventDefault(event)}
+        onDragLeave={(event) => preventDefault(event)}
+      >
+        Drag & Drop your file here
+      </div>
     </>
   );
 };
