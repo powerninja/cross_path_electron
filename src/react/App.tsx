@@ -155,87 +155,90 @@ export const App = () => {
               noValidate
               autoComplete="off"
             >
-              <TextField
-                id="outlined-multiline-static"
-                label="Windows Path"
-                placeholder="ここにファイルをドラッグ＆ドロップするとWindowsのパスが入力されます。"
-                multiline
-                rows={8}
-                value={checkConvertedWinPath ? winPath : convertedWinPath}
-                onChange={(event) => {
-                  setPathInput(event.target.value, true);
-                }}
-                onDrop={(event) => {
-                  event.preventDefault();
-                  event.stopPropagation();
+              <Tooltip title="Windowsのファイルをドロップしてください" placement="top" arrow>
+                <TextField
+                  id="outlined-multiline-static"
+                  label="Windows Path"
+                  placeholder="Drop your Windows path here..."
+                  multiline
+                  rows={8}
+                  value={checkConvertedWinPath ? winPath : convertedWinPath}
+                  onChange={(event) => {
+                    setPathInput(event.target.value, true);
+                  }}
+                  onDrop={(event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
 
-                  for (const file of event.dataTransfer.files) {
-                    if (file.path) {
-                      setCheckConvertedWinPath(true);
+                    for (const file of event.dataTransfer.files) {
+                      if (file.path) {
+                        setCheckConvertedWinPath(true);
+                      }
+                      // send the file path to the main process
+                      ipcRenderer.send('ondrop', file.path);
+                      // Also, update the state in your React component
+                      setWinPath(file.path);
                     }
-                    // send the file path to the main process
-                    ipcRenderer.send('ondrop', file.path);
-                    // Also, update the state in your React component
-                    setWinPath(file.path);
-                  }
-                }}
-                onDragOver={(event) => {
-                  event.preventDefault();
-                  event.stopPropagation();
-                }}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <Tooltip title="Copy to Clipboard" placement="top" arrow>
-                        <IconButton color="primary" size="small" onClick={() => copyToClipboard(resultWinText, true)}>
-                          {checkCopyWinFlag ? <CheckIcon></CheckIcon> : <ContentCopyIcon fontSize="small" />}
-                        </IconButton>
-                      </Tooltip>
-                    </InputAdornment>
-                  ),
-                }}
-              />
+                  }}
+                  onDragOver={(event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <Tooltip title="Copy to Clipboard" placement="top" arrow>
+                          <IconButton color="primary" size="small" onClick={() => copyToClipboard(resultWinText, true)}>
+                            {checkCopyWinFlag ? <CheckIcon></CheckIcon> : <ContentCopyIcon fontSize="small" />}
+                          </IconButton>
+                        </Tooltip>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Tooltip>
+              <Tooltip title="Macのファイルをドロップしてください" placement="top" arrow>
+                <TextField
+                  id="outlined-multiline-static"
+                  label="Mac Path"
+                  placeholder="Drop your Mac file here..."
+                  multiline
+                  rows={8}
+                  value={checkConvertedMacPath ? macPath : convertedMacPath}
+                  onChange={(event) => {
+                    setPathInput(event.target.value, false);
+                  }}
+                  onDrop={(event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
 
-              <TextField
-                id="outlined-multiline-static"
-                label="Mac Path"
-                placeholder="ここにファイルをドラッグ＆ドロップするとMacのパスが入力されます。"
-                multiline
-                rows={8}
-                value={checkConvertedMacPath ? macPath : convertedMacPath}
-                onChange={(event) => {
-                  setPathInput(event.target.value, false);
-                }}
-                onDrop={(event) => {
-                  event.preventDefault();
-                  event.stopPropagation();
-
-                  for (const file of event.dataTransfer.files) {
-                    if (file.path) {
-                      setCheckConvertedMacPath(true);
+                    for (const file of event.dataTransfer.files) {
+                      if (file.path) {
+                        setCheckConvertedMacPath(true);
+                      }
+                      // send the file path to the main process
+                      ipcRenderer.send('ondrop', file.path);
+                      // Also, update the state in your React component
+                      setMacPath(file.path);
                     }
-                    // send the file path to the main process
-                    ipcRenderer.send('ondrop', file.path);
-                    // Also, update the state in your React component
-                    setMacPath(file.path);
-                  }
-                }}
-                onDragOver={(event) => {
-                  event.preventDefault();
-                  event.stopPropagation();
-                }}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <Tooltip title="Copy to Clipboard" placement="top" arrow>
-                        <IconButton color="primary" size="small" onClick={() => copyToClipboard(resultMacText, false)}>
-                          {checkCopyMacFlag ? <CheckIcon></CheckIcon> : <ContentCopyIcon fontSize="small" />}
-                        </IconButton>
-                      </Tooltip>
-                    </InputAdornment>
-                  ),
-                }}
-              />
+                  }}
+                  onDragOver={(event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <Tooltip title="Copy to Clipboard" placement="top" arrow>
+                          <IconButton color="primary" size="small" onClick={() => copyToClipboard(resultMacText, false)}>
+                            {checkCopyMacFlag ? <CheckIcon></CheckIcon> : <ContentCopyIcon fontSize="small" />}
+                          </IconButton>
+                        </Tooltip>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Tooltip>
 
               <div className="button-container">
                 <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => clearPath()}>
