@@ -15,8 +15,8 @@ const rootPath = `file://${ROOT_PATH}/build/react/index.html`;
 // アプリ起動時の処理
 app.on('ready', (e) => {
   const mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 800,
+    width: 1000,
+    height: 500,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
