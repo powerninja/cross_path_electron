@@ -158,6 +158,7 @@ export const App = () => {
               <TextField
                 id="outlined-multiline-static"
                 label="Windows Path"
+                placeholder="ここにファイルをドラッグ＆ドロップするとWindowsのパスが入力されます。"
                 multiline
                 rows={8}
                 value={checkConvertedWinPath ? winPath : convertedWinPath}
@@ -198,6 +199,7 @@ export const App = () => {
               <TextField
                 id="outlined-multiline-static"
                 label="Mac Path"
+                placeholder="ここにファイルをドラッグ＆ドロップするとMacのパスが入力されます。"
                 multiline
                 rows={8}
                 value={checkConvertedMacPath ? macPath : convertedMacPath}
