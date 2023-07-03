@@ -59,6 +59,7 @@
     "@babel/preset-react": "^7.22.5",
     "@types/lodash": "^4.14.195",
     "css-loader": "^6.8.1",
+    "electron-builder": "^24.4.0",
     "style-loader": "^3.3.3",
     "ts-loader": "^9.4.4",
     "webpack": "^5.88.0",
