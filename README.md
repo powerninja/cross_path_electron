@@ -11,11 +11,11 @@
 
 # アプリケーションのダウンロード
 
-## MacOs
+## MacOS
 
 [こちら](https://github.com/powerninja/cross_path_electron/releases/download/1.0.0/TrailMixer.zip)から zip ファイルをダウンロードし、ご利用ください。
 
-## WindowsOs
+## WindowsOS
 
 準備中
 
