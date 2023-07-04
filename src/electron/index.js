@@ -23,6 +23,8 @@ app.on('ready', (e) => {
       webSecurity: false,
     },
   });
+  // デベロップツールの表示
+  mainWindow.openDevTools();
   mainWindow.loadURL(rootPath);
 
   // mainWindowが新しいウィンドウを開くために 'new-window' イベントを発行した時に発火するリスナーを設定
