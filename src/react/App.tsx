@@ -46,6 +46,8 @@ export const App = () => {
   const [checkConvertedWinPath, setCheckConvertedWinPath] = useState<boolean>(false);
   const [checkConvertedMacPath, setCheckConvertedMacPath] = useState<boolean>(false);
 
+  const [inputSequence, setInputSequence] = useState<string[]>([]);
+
   // inputフォーム入力
   const setPathInput = (inputPath: string, isWindowsPath: boolean) => {
     //windowsのpathを変換
@@ -92,6 +94,30 @@ export const App = () => {
     setConvertedWinPath(initialPath);
     setConvertedMacPath(initialPath);
   };
+
+  //コマンドの確認を行う
+  const handleKeyDown = (event: KeyboardEvent) => {
+    const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'b', 'a'];
+
+    // 入力されたキーを配列に追加
+    inputSequence.push(event.key);
+
+    // 入力配列がKonamiコードより長くなったら、最初の要素を削除する
+    if (inputSequence.length > konamiCode.length) {
+      inputSequence.shift();
+    }
+
+    // 入力配列がKonamiコードと一致しているかをチェック
+    if (inputSequence.join('') === konamiCode.join('')) {
+      // コードが一致したときに行うアクション
+      //ページ遷移させる
+      console.log('Konami code entered!');
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown, false);
+  }, []);
 
   return (
     <>
